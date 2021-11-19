@@ -1,19 +1,19 @@
-#include <algorithm>
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <sstream>
 #include <unistd.h>
+
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
+#include "pageTable.h"
+#include "ram.h"
 #include "string_util.h"
 #include "virtualMemoryTypes.h"
-#include "ram.h"
-#include "pageTable.h"
 
 using namespace std;
 using namespace str_util;
-
 
 /**
  * Print string to stdout iff stdin is connected to a keyboard.
@@ -25,23 +25,21 @@ using namespace str_util;
  * @return true
  */
 bool showOnlyOnScreen(const string& displayString) {
-  if (isatty(fileno(stdin)))
-    cout << displayString;
+  if (isatty(fileno(stdin))) cout << displayString;
   return true;
 }
 
 constexpr int framesInRAM = 8;
 constexpr int pagesInProcess = 16;
 const string commentMarker = "#";
+
 /**
  * Command-processor for simulating a virtual memory system.
  *
  * Read standard input for commands: READ, WRITE, PAGES, FRAMES, TIME,
  * REF, CLEAR
  */
-int main(int argc, char *argv[])
-{
-
+int main(int argc, char* argv[]) {
   RAM ram(framesInRAM);
   PageTable pageTable(pagesInProcess);
 
@@ -53,15 +51,13 @@ int main(int argc, char *argv[])
   for (string line; showOnlyOnScreen(prompt), getline(cin, line);) {
     // strip eoln-comments
     string::size_type commentStart = line.find(commentMarker);
-    if (commentStart != string::npos)
-      line = line.substr(0, commentStart);
+    if (commentStart != string::npos) line = line.substr(0, commentStart);
 
     // trim opening/closing whitespace
     line = trim_left(trim_right(line));
 
     // ignore blank lines
-    if (line.empty())
-      continue;
+    if (line.empty()) continue;
 
     // take apart the read line
     stringstream readLine(line);
@@ -74,7 +70,7 @@ int main(int argc, char *argv[])
     readLine >> cmd;
     if ((cmd == "READ") || (cmd == "WRITE")) {
       // Did this access cause a page fault interrupt?
-      bool pageFault = false; // not yet
+      bool pageFault = false;  // not yet
       string vaddressString;
       readLine >> vaddressString;
 
@@ -94,11 +90,9 @@ int main(int argc, char *argv[])
       // frame is frame of this address
       ram[frame].timestamp(eventClock);
       pageTable[page].referenced(true);
-      cout << hex << setw(5) << setfill('0') << frame << '|'
-           << hex << setw(3) << setfill('0') << offset
-           << (pageFault?"*":" ")
-           << dec << " " << ram[frame].timestamp()
-           << endl;
+      cout << hex << setw(5) << setfill('0') << frame << '|' << hex << setw(3)
+           << setfill('0') << offset << (pageFault ? "*" : " ") << dec << " "
+           << ram[frame].timestamp() << endl;
 
     } else if (cmd == "PAGES") {
       cout << "PageTable------" << endl;
@@ -119,7 +113,9 @@ int main(int argc, char *argv[])
     } else if (cmd == "CLEAR") {
       pageTable.clearReferenced();
 
-    } else {
+    } else if (cmd == "quit" || cmd == "QUIT")
+      return 0;
+    else {
       cout << "Unknown command \"" << cmd << "\"" << endl;
     }
   }

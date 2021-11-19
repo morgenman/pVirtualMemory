@@ -2,13 +2,8 @@
 
 RAM::RAM(const size_t n) {}
 
-/**
- * Find the FrameNumber of a free frame, if one exists.
- *
- * @return lowest valid FrameNumber of a free Frame if one exists; noSuchFrame
- * if there are no free Frame in the RAM
- */
-FrameNumber RAM::findFree() {}
+
+FrameNumber RAM::findFree() { return 0; }
 
 /**
  * Find the FrameNumber of the Frame with the lowest referenced time stamp.
@@ -16,7 +11,7 @@ FrameNumber RAM::findFree() {}
  * @return FrameNumber of Frame where .referenced() method is the minimum
  * across RAM
  */
-FrameNumber RAM::findOldest() {}
+FrameNumber RAM::findOldest() { return 0; }
 
 /**
  * Simulate loading a Frame with the contents of a given page.
@@ -38,5 +33,10 @@ FrameNumber RAM::findOldest() {}
  * @param useTimestamp use Frame timestamps if true; use PTE referenced bits
  * if not.
  */
-FrameNumber RAM::load(PageNumber p, PageTable& pageTable,
-                      bool useTimestamp = true) {}
+FrameNumber RAM::load(PageNumber p, PageTable& pageTable, bool useTimestamp) {
+  return 0;
+}
+
+std::ostream& operator<<(std::ostream& out, const RAM& ram) {
+  return std::cout;
+}

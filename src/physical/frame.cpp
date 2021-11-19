@@ -7,7 +7,7 @@
  * @return PageNumber associated with frame if frame is not free;
  * noSuchPage otherwise.
  */
-PageNumber Frame::page() const {}
+PageNumber Frame::page() const { return 0; }
 
 /**
  * Set the page number in the frame.
@@ -15,7 +15,7 @@ PageNumber Frame::page() const {}
  * @param newPage new value for the page number
  * @return PageNumber in frame after it is set
  */
-PageNumber Frame::page(PageNumber newPage) {}
+PageNumber Frame::page(PageNumber newPage) { return 0; }
 
 /**
  * Get the reference time in a non-free frame.
@@ -24,7 +24,7 @@ PageNumber Frame::page(PageNumber newPage) {}
  * 0 otherwise.
  *
  */
-EventTime Frame::timestamp() const {}
+EventTime Frame::timestamp() const { return 0; }
 
 /**
  * Set the reference time in the frame.
@@ -32,14 +32,14 @@ EventTime Frame::timestamp() const {}
  * @param newReference new value for the time stamp
  * @return reference time after it is set
  */
-EventTime Frame::timestamp(EventTime newReference) {}
+EventTime Frame::timestamp(EventTime newReference) { return 0; }
 
 /**
  * Is the frame currently free?
  *
  * @return true if free; false otherwise
  */
-bool Frame::free() const {}
+bool Frame::free() const { return 0; }
 
 /**
  * Set the free bit in the frame.
@@ -47,4 +47,4 @@ bool Frame::free() const {}
  * @param newFree the new value for the free bit
  * @return free bit after it is set
  */
-bool free(bool newFree) {}
+bool free(bool newFree) { return 0; }

@@ -3,12 +3,12 @@
 /**
  * Constructor takes the number of pages in the page table.
  */
-PageTable::PageTable(const size_t n);
+PageTable::PageTable(const size_t n) {}
 
 /**
  * Clear the referenced bit in all PTE.
  */
-void PageTable::clearReferenced();
+void PageTable::clearReferenced() {}
 
 /**
  * Lookup the given page in the PageTable.
@@ -17,15 +17,15 @@ void PageTable::clearReferenced();
  * @return the FrameNumber where the page is loaded (if it is present)
  * noSuchFrame otherwise
  */
-FrameNumber PageTable::lookup(PageNumber p);
+FrameNumber PageTable::lookup(PageNumber p) { return 0; }
 
 /**
- * Find the lowest page number that is unreferenced.
+ * Find the lowest page number that is unrefereSnced.
  *
  * @return valid page number of an unreferenced, present page
  * if there is one; noSuchPage otherwise.
  */
-PageNumber PageTable::findUnreferenced();
+PageNumber PageTable::findUnreferenced() { return 0; }
 
 /**
  * Find the page number associated with the give frame.
@@ -33,4 +33,8 @@ PageNumber PageTable::findUnreferenced();
  * @return page number of present page referring to given frame;
  * noSuchPage if there is no such page.
  */
-PageNumber PageTable::findByFrame(FrameNumber frame);
+PageNumber PageTable::findByFrame(FrameNumber frame) { return 0; }
+
+std::ostream& operator<<(std::ostream& out, const PageTable& pageTable) {
+  return std::cout;
+}
