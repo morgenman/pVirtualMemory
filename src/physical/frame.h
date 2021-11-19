@@ -2,6 +2,7 @@
 #define FRAME_H
 
 #include <iostream>
+
 #include "virtualMemoryTypes.h"
 
 /**
@@ -16,7 +17,8 @@
  * fields when they are declared.
  */
 class Frame {
-public:
+ public:
+  Frame();
   /**
    * Get the page number associated with a non-free page.
    *
@@ -65,7 +67,7 @@ public:
    */
   bool free(bool newFree);
 
-private:
+ private:
   bool _free{true};
   PageNumber _page{noSuchPage};
   EventTime _reference{0};
@@ -88,6 +90,6 @@ private:
  * @param frame the frame to be printed
  * @return out for continued processing of the output stream
  */
-std::ostream & operator<<(std::ostream & out, const Frame & frame);
+std::ostream& operator<<(std::ostream& out, const Frame& frame);
 
 #endif /* FRAME_H */

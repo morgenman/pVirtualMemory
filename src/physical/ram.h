@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <vector>
 
-#include "virtualMemoryTypes.h"
 #include "frame.h"
 #include "pageTable.h"
+#include "virtualMemoryTypes.h"
 
 /**
  * RAM is vector of Frame objects indexed by their FrameNumber.
@@ -15,9 +15,9 @@
  * All Frame are initially free (their .free() method returns true). Once
  * content has been put into a Frame, it will never again be free.
  */
-class RAM : public std::vector<Frame>
-{
-  public:
+class RAM : public std::vector<Frame> {
+ private:
+ public:
   /**
    * Constructor: builds a new RAM with n free Frame in it.
    *
@@ -48,11 +48,12 @@ class RAM : public std::vector<Frame>
    * and a time stamp. This method simulates the loading of the content (and
    * the referenced time is updated elsewhere).
    *
-   * Load the page to the lowest numbered free frame FrameNumber if there are any.
-   * Select a FrameNumber to evict from RAM by
-   * - the lowest .referenced() time of the Frame if useTimestamp is true, otherwise
-   * - the FrameNumber in the lowest PageNumber that has a zero .reference() bit,
-   *   if one exists, and if none exists
+   * Load the page to the lowest numbered free frame FrameNumber if there are
+   * any. Select a FrameNumber to evict from RAM by
+   * - the lowest .referenced() time of the Frame if useTimestamp is true,
+   * otherwise
+   * - the FrameNumber in the lowest PageNumber that has a zero .reference()
+   * bit, if one exists, and if none exists
    * - the FrameNumber of the lowest PageNumber that is .present() in RAM.
    *
    * @param p the PageNumber to load into RAM
@@ -60,7 +61,8 @@ class RAM : public std::vector<Frame>
    * @param useTimestamp use Frame timestamps if true; use PTE referenced bits
    * if not.
    */
-  FrameNumber load(PageNumber p, PageTable & pageTable, bool useTimestamp = true);
+  FrameNumber load(PageNumber p, PageTable& pageTable,
+                   bool useTimestamp = true);
 };
 
 /**
@@ -75,6 +77,6 @@ class RAM : public std::vector<Frame>
  * @param ram the memory to print
  * @return out; the output stream for continued processing
  */
-std::ostream & operator<<(std::ostream & out, const RAM & ram);
+std::ostream& operator<<(std::ostream& out, const RAM& ram);
 
 #endif /* RAM_H */

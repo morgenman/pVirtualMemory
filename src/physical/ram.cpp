@@ -1,7 +1,6 @@
 #include "ram.h"
 
-RAM::RAM(const size_t n) {}
-
+RAM::RAM(const size_t n) { resize(n); }
 
 FrameNumber RAM::findFree() { return 0; }
 

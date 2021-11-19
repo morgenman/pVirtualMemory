@@ -1,13 +1,18 @@
 
 #include "frame.h"
 
+Frame::Frame() {}
+
 /**
  * Get the page number associated with a non-free page.
  *
  * @return PageNumber associated with frame if frame is not free;
  * noSuchPage otherwise.
  */
-PageNumber Frame::page() const { return 0; }
+PageNumber Frame::page() const {
+  if (_free) return noSuchPage;
+  return 0;
+}
 
 /**
  * Set the page number in the frame.
@@ -39,7 +44,7 @@ EventTime Frame::timestamp(EventTime newReference) { return 0; }
  *
  * @return true if free; false otherwise
  */
-bool Frame::free() const { return 0; }
+bool Frame::free() const { return _free; }
 
 /**
  * Set the free bit in the frame.
@@ -47,4 +52,4 @@ bool Frame::free() const { return 0; }
  * @param newFree the new value for the free bit
  * @return free bit after it is set
  */
-bool free(bool newFree) { return 0; }
+bool Frame::free(bool newFree) { return _free = newFree; }

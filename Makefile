@@ -5,7 +5,7 @@
 # Compiling x86 code on x86 Linux (or similar)
 #   CC - the C++ compiler to use
 #   ASM - the assembler to use
-CC := g++
+CC := g++-10
 ASM := nasm
 
 # Directory for compiled object files.
@@ -24,7 +24,7 @@ LIBRARY_FILE =
 #   -Wall      report all possible warnings
 #   -Werror    treat any warning as an error and stop the compile
 #   -g         include debug information in the .o and executable files
-CFLAGS = -std=c++2a -O0 -Wall -Werror -g
+CFLAGS = -std=c++20 -O0 -Wall -Werror -g
 
 # ASMFLAGS - flags for the NASM assembler
 #   -fbin    output format flat 16-bit binary (bootloader, DOS-like)
