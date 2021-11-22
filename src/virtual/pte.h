@@ -1,20 +1,18 @@
+/**
+ * PTE Class implements the type P(age)T(able)E(ntry)
+ *
+ * A PTE object stores a FrameNumber (index into RAM array) and booleans for if
+ * it is currently in RAM and whether it has been 'referenced' recently
+ *
+ */
+
 #ifndef PTE_H
 #define PTE_H
 
 #include <iostream>
 
 #include "virtualMemoryTypes.h"
-/**
- * A Page Table Entry
- *
- * The interface is defined in this header file.
- * The private data fields to support the interface are necessary.
- *
- * With no constructor the compiler generates a default (no-parameter)
- * constructor. You may write a default constructor to initialize
- * the data fields or use {} initialization to set the value of the
- * fields when they are declared.
- */
+
 class PTE {
  public:
   PTE();

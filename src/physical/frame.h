@@ -1,3 +1,11 @@
+/**
+ * The Frame class implements a frame, which represents a chunk of RAM.
+ *
+ * It stores whether it is being used (_free), the PageNumber which  corresponds
+ * to it in PageTable and the time it was created/accessed
+ *
+ */
+
 #ifndef FRAME_H
 #define FRAME_H
 
@@ -5,19 +13,14 @@
 
 #include "virtualMemoryTypes.h"
 
-/**
- * A Frame
- *
- * The interface is defined in this header file.
- * The private data fields to support the interface are necessary.
- *
- * With no constructor the compiler generates a default (no-parameter)
- * constructor. You may write a default constructor to initialize
- * the data fields or use {} initialization to set the value of the
- * fields when they are declared.
- */
 class Frame {
  public:
+  /**
+   * Frame Constructor overloading
+   *
+   * @param  {bool} free     : is it free?
+   * @param  {PageNumber} pn : set PageNumber
+   */
   Frame();
   Frame(bool free, PageNumber pn);
   /**

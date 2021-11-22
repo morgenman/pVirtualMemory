@@ -1,3 +1,11 @@
+/**
+ * PageTable class extends vector to implement a Page Table structure
+ *
+ * A Page Table 'caches' page => frame lookups, theoretically lowering the cost
+ * for lookup. As such I have tried to keep the operations for these as simple
+ * as possible
+ *
+ */
 #ifndef PAGETABLE_H
 #define PAGETABLE_H
 

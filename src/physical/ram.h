@@ -1,3 +1,12 @@
+/**
+ * The RAM class implements a virtual RAM implementation.
+ *
+ * In it's current state, it doesn't store any actual program data.
+ * Implementation involves extending a vector of Frames. Look at frame.h to see
+ * what information is stored in RAM
+ *
+ */
+
 #ifndef RAM_H
 #define RAM_H
 #include <algorithm>
@@ -16,10 +25,11 @@
  * content has been put into a Frame, it will never again be free.
  */
 class RAM : public std::vector<Frame> {
- private:
  public:
   /**
    * Constructor: builds a new RAM with n free Frame in it.
+   * resize() seemed to be the most cost-effective method which still called the
+   * constructor on Frames.
    *
    * @param n number of Frame in the RAM
    */
@@ -49,13 +59,23 @@ class RAM : public std::vector<Frame> {
    * and a time stamp. This method simulates the loading of the content (and
    * the referenced time is updated elsewhere).
    *
+   * Part 1:
    * Load the page to the lowest numbered free frame FrameNumber if there are
-   * any. Select a FrameNumber to evict from RAM by
-   * - the lowest .referenced() time of the Frame if useTimestamp is true,
-   * otherwise
-   * - the FrameNumber in the lowest PageNumber that has a zero .reference()
-   * bit, if one exists, and if none exists
-   * - the FrameNumber of the lowest PageNumber that is .present() in RAM.
+   * any.
+   * Select a FrameNumber to evict from RAM by the lowest .referenced() time of
+   * the Frame if useTimestamp is true, otherwise the FrameNumber in the lowest
+   * PageNumber that has a zero .reference() bit, if one exists, and if none
+   * exists the FrameNumber of the lowest PageNumber that is .present() in RAM.
+   *
+   * Part 2:
+   * Error checking, should never be called
+   *
+   * Part 3:
+   * Make sure any newly loaded frames aren't referenced in the PageTable. Mark
+   * them as not present, load noSuchFrame as frame#.
+   *
+   * Part 4:
+   * Put 'data' into Frame. Put new PTE into PageTable
    *
    * @param p the PageNumber to load into RAM
    * @param pageTable the table of PTE; may be modified by loading

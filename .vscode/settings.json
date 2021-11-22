@@ -8,7 +8,7 @@
     }
   ],
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
-  "autoHide.autoHidePanel": false,
+  "autoHide.autoHidePanel": true,
   "files.associations": {
     "algorithm": "cpp",
     "array": "cpp",

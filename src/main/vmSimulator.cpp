@@ -1,3 +1,17 @@
+/**
+ *  Implementation of Memory Virtualization
+ *
+ *  vmSimulator and subsequent subclasses needed for Page Table lookup, address
+ *  translation, and dynamic memory relocation.
+ *  Aside from this file containing main(), function documentation will be in
+ *  header files, with `.cpp` comments present as inline comments as necessary
+ *
+ *  @author: Dylan (Cole) Morgen
+ *  @email: morgendc203@potsdam.edu
+ *  @course: CIS 310 Operating Systems
+ *  @due: 11/22/2021
+ */
+
 #include <unistd.h>
 
 #include <algorithm>
@@ -15,6 +29,10 @@
 using namespace std;
 using namespace str_util;
 
+constexpr int framesInRAM = 8;
+constexpr int pagesInProcess = 16;
+const string commentMarker = "#";
+
 /**
  * Print string to stdout iff stdin is connected to a keyboard.
  *
@@ -29,10 +47,6 @@ bool showOnlyOnScreen(const string& displayString) {
   return true;
 }
 
-constexpr int framesInRAM = 8;
-constexpr int pagesInProcess = 16;
-const string commentMarker = "#";
-
 /**
  * Command-processor for simulating a virtual memory system.
  *
@@ -45,6 +59,7 @@ int main(int argc, char* argv[]) {
   int eventClock = 0;
   bool useTimeStamp = true;
   bool trace = false;
+  vector<string> qWords{"quit", "Quit", "QUIT", "exit", "Exit", "EXIT"};
 
   string prompt = "> ";
 
@@ -101,11 +116,11 @@ int main(int argc, char* argv[]) {
     } else if (cmd == "PAGES") {
       cout << "PageTable------" << endl;
       cout << pageTable;
-      cout << "F-----O--f-t-----" << endl;
+      cout << "----------------" << endl;
     } else if (cmd == "FRAMES") {
       cout << "RAM--------------" << endl;
       cout << ram;
-      cout << "F-----O--f-t----" << endl;
+      cout << "----------------" << endl;
 
     } else if (cmd == "TIME") {
       useTimeStamp = true;
@@ -116,7 +131,7 @@ int main(int argc, char* argv[]) {
     } else if (cmd == "CLEAR") {
       pageTable.clearReferenced();
 
-    } else if (cmd == "quit" || cmd == "QUIT")
+    } else if (std::find(qWords.begin(), qWords.end(), cmd) != qWords.end())
       return 0;
     else {
       cout << "Unknown command \"" << cmd << "\"" << endl;

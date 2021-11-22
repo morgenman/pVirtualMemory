@@ -1,6 +1,7 @@
 #include "pte.h"
 
 #include <iomanip>
+
 PTE::PTE() {
   _present = false;
   _referenced = false;
@@ -10,7 +11,9 @@ PTE::PTE() {
 FrameNumber PTE::frame() const { return _frame; }
 
 FrameNumber PTE::frame(FrameNumber newFrameNumber) {
-  if (newFrameNumber == noSuchFrame) _present = false;
+  // Uncomment for optional implementation where present bit is managed by PTE
+  // set function
+  // if (newFrameNumber == noSuchFrame) _present = false;
   return _frame = newFrameNumber;
 }
 

@@ -20,6 +20,7 @@ FrameNumber RAM::findOldest() {
 }
 
 FrameNumber RAM::load(PageNumber p, PageTable& pageTable, bool useTimestamp) {
+  // **** Part 1 *****
   FrameNumber free = findFree();
   if (useTimestamp) {
     if (free == noSuchFrame) free = findOldest();
@@ -32,11 +33,14 @@ FrameNumber RAM::load(PageNumber p, PageTable& pageTable, bool useTimestamp) {
         break;
       }
   }
+
+  // **** Part 2 *****
   if (free == noSuchFrame)
     std::cout << std::endl
               << "ERROR: RAM::load() is trying to use noSuchFrame as an index"
               << std::endl;
 
+  // **** Part 3 *****
   PageNumber p2 = pageTable.findByFrame(free);
   while (noSuchPage != p2) {
     pageTable[p2].frame(noSuchFrame);
@@ -44,6 +48,7 @@ FrameNumber RAM::load(PageNumber p, PageTable& pageTable, bool useTimestamp) {
     p2 = pageTable.findByFrame(free);
   }
 
+  // **** Part 4 *****
   (*this)[free].free(false);
   (*this)[free].page(p);
   pageTable[p].frame(free);
