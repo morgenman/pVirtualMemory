@@ -26,7 +26,7 @@ class RAM : public std::vector<Frame> {
   RAM(const size_t n);
 
   /**
-   * Find the FrameNumber of a free frame, if one exists.
+   * Find the FrameNumber of a free frame, if one exists [from ram].
    *
    * @return lowest valid FrameNumber of a free Frame if one exists; noSuchFrame
    * if there are no free Frame in the RAM
@@ -34,7 +34,8 @@ class RAM : public std::vector<Frame> {
   FrameNumber findFree();
 
   /**
-   * Find the FrameNumber of the Frame with the lowest referenced time stamp.
+   * Find the FrameNumber of the Frame with the lowest referenced time stamp
+   * [from ram].
    *
    * @return FrameNumber of Frame where .referenced() method is the minimum
    * across RAM

@@ -19,6 +19,7 @@
 class Frame {
  public:
   Frame();
+  Frame(bool free, PageNumber pn);
   /**
    * Get the page number associated with a non-free page.
    *

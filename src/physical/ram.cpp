@@ -2,40 +2,57 @@
 
 RAM::RAM(const size_t n) { resize(n); }
 
-FrameNumber RAM::findFree() { return 0; }
+FrameNumber RAM::findFree() {
+  for (size_t i = 0; i < (*this).size(); i++)
+    if ((*this)[i].free()) return i;
+  return noSuchFrame;
+}
 
-/**
- * Find the FrameNumber of the Frame with the lowest referenced time stamp.
- *
- * @return FrameNumber of Frame where .referenced() method is the minimum
- * across RAM
- */
-FrameNumber RAM::findOldest() { return 0; }
+FrameNumber RAM::findOldest() {
+  FrameNumber oldest = 0;
+  EventTime ts = (*this)[oldest].timestamp();
+  for (size_t i = 0; i < (*this).size(); i++)
+    if ((*this)[i].timestamp() < ts) {
+      ts = (*this)[i].timestamp();
+      oldest = i;
+    }
+  return oldest;
+}
 
-/**
- * Simulate loading a Frame with the contents of a given page.
- *
- * Actual content of Frame is a PageNumber (the one whose content it holds)
- * and a time stamp. This method simulates the loading of the content (and
- * the referenced time is updated elsewhere).
- *
- * Load the page to the lowest numbered free frame FrameNumber if there are any.
- * Select a FrameNumber to evict from RAM by
- * - the lowest .referenced() time of the Frame if useTimestamp is true,
- * otherwise
- * - the FrameNumber in the lowest PageNumber that has a zero .reference() bit,
- *   if one exists, and if none exists
- * - the FrameNumber of the lowest PageNumber that is .present() in RAM.
- *
- * @param p the PageNumber to load into RAM
- * @param pageTable the table of PTE; may be modified by loading
- * @param useTimestamp use Frame timestamps if true; use PTE referenced bits
- * if not.
- */
 FrameNumber RAM::load(PageNumber p, PageTable& pageTable, bool useTimestamp) {
-  return 0;
+  FrameNumber free = findFree();
+  if (useTimestamp) {
+    if (free == noSuchFrame) free = findOldest();
+  } else {
+    PageNumber k = pageTable.findUnreferenced();
+    if (k != noSuchPage) free = k;
+    for (auto i : pageTable)
+      if (i.present()) {
+        free = i.frame();
+        break;
+      }
+  }
+  if (free == noSuchFrame)
+    std::cout << std::endl
+              << "ERROR: RAM::load() is trying to use noSuchFrame as an index"
+              << std::endl;
+
+  PageNumber p2 = pageTable.findByFrame(free);
+  while (noSuchPage != p2) {
+    pageTable[p2].frame(noSuchFrame);
+    pageTable[p2].present(false);
+    p2 = pageTable.findByFrame(free);
+  }
+
+  (*this)[free].free(false);
+  (*this)[free].page(p);
+  pageTable[p].frame(free);
+  pageTable[p].present(true);
+  return free;
 }
 
 std::ostream& operator<<(std::ostream& out, const RAM& ram) {
-  return std::cout;
+  for (int i = 0; i < (int)ram.size(); i++)
+    out << "  " << i << " " << ram[i] << std::endl;
+  return out;
 }

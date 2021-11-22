@@ -5,7 +5,7 @@
 # Compiling x86 code on x86 Linux (or similar)
 #   CC - the C++ compiler to use
 #   ASM - the assembler to use
-CC := g++-10
+CC := g++
 ASM := nasm
 
 # Directory for compiled object files.

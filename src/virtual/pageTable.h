@@ -4,17 +4,16 @@
 #include <iostream>
 #include <vector>
 
-#include "virtualMemoryTypes.h"
 #include "pte.h"
+#include "virtualMemoryTypes.h"
 
 /**
  * A vector of PTE representing the page table for a single process.
  *
  * Extends vector so that [] works for clients of the PageTable.
  */
-class PageTable : public std::vector<PTE>
-{
-  public:
+class PageTable : public std::vector<PTE> {
+ public:
   /**
    * Constructor takes the number of pages in the page table.
    */
@@ -62,5 +61,5 @@ class PageTable : public std::vector<PTE>
  * @param pageTable the page table to print
  * @return out; the output stream for continued processing
  */
-std::ostream & operator<<(std::ostream & out, const PageTable & pageTable);
+std::ostream& operator<<(std::ostream& out, const PageTable& pageTable);
 #endif /* PAGETABLE_H */

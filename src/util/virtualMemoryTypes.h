@@ -14,7 +14,6 @@ const unsigned int offsetWidth = 12;
 using VirtualAddress = unsigned int;
 using PhysicalAddress = unsigned int;
 
-
 PageNumber getPage(VirtualAddress va);
 Offset getOffset(VirtualAddress va);
 #endif /* VIRTUALMEMORYTYPES_H */

@@ -1,7 +1,13 @@
 
 #include "frame.h"
 
+#include <iomanip>
+
 Frame::Frame() {}
+Frame::Frame(bool free, PageNumber pn) {
+  _free = free;
+  _page = pn;
+}
 
 /**
  * Get the page number associated with a non-free page.
@@ -11,7 +17,7 @@ Frame::Frame() {}
  */
 PageNumber Frame::page() const {
   if (_free) return noSuchPage;
-  return 0;
+  return _page;
 }
 
 /**
@@ -20,7 +26,7 @@ PageNumber Frame::page() const {
  * @param newPage new value for the page number
  * @return PageNumber in frame after it is set
  */
-PageNumber Frame::page(PageNumber newPage) { return 0; }
+PageNumber Frame::page(PageNumber newPage) { return _page = newPage; }
 
 /**
  * Get the reference time in a non-free frame.
@@ -29,7 +35,10 @@ PageNumber Frame::page(PageNumber newPage) { return 0; }
  * 0 otherwise.
  *
  */
-EventTime Frame::timestamp() const { return 0; }
+EventTime Frame::timestamp() const {
+  if (_free) return 0;
+  return _reference;
+}
 
 /**
  * Set the reference time in the frame.
@@ -37,7 +46,9 @@ EventTime Frame::timestamp() const { return 0; }
  * @param newReference new value for the time stamp
  * @return reference time after it is set
  */
-EventTime Frame::timestamp(EventTime newReference) { return 0; }
+EventTime Frame::timestamp(EventTime newReference) {
+  return _reference = newReference;
+}
 
 /**
  * Is the frame currently free?
@@ -53,3 +64,14 @@ bool Frame::free() const { return _free; }
  * @return free bit after it is set
  */
 bool Frame::free(bool newFree) { return _free = newFree; }
+
+std::ostream& operator<<(std::ostream& out, const Frame& frame) {
+  if (frame.free())
+    out << " |       "
+        << "free|";
+  else
+    out << " |" << std::hex << std::setw(5) << std::setfill('0') << frame.page()
+        << "|" << std::setw(5) << std::setfill(' ') << std::dec
+        << frame.timestamp() << "|";
+  return out;
+}

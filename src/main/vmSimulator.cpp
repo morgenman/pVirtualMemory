@@ -42,9 +42,9 @@ const string commentMarker = "#";
 int main(int argc, char* argv[]) {
   RAM ram(framesInRAM);
   PageTable pageTable(pagesInProcess);
-
   int eventClock = 0;
   bool useTimeStamp = true;
+  bool trace = false;
 
   string prompt = "> ";
 
@@ -62,6 +62,7 @@ int main(int argc, char* argv[]) {
     // take apart the read line
     stringstream readLine(line);
     string cmd;
+
     PageNumber page;
     FrameNumber frame;
     Offset offset;
@@ -78,8 +79,11 @@ int main(int argc, char* argv[]) {
       ++eventClock;
 
       page = getPage(vaddress);
-      offset = getOffset(vaddress);
+      if (trace)
+        cout << "Page is: " << page << "; Original string: " << vaddressString
+             << endl;
 
+      offset = getOffset(vaddress);
       frame = pageTable.lookup(page);
       if (frame == noSuchFrame) {
         // page is not loaded in a frame (page fault interrupt)
@@ -97,12 +101,11 @@ int main(int argc, char* argv[]) {
     } else if (cmd == "PAGES") {
       cout << "PageTable------" << endl;
       cout << pageTable;
-      cout << "---------------" << endl;
-
+      cout << "F-----O--f-t-----" << endl;
     } else if (cmd == "FRAMES") {
       cout << "RAM--------------" << endl;
       cout << ram;
-      cout << "-----------------" << endl;
+      cout << "F-----O--f-t----" << endl;
 
     } else if (cmd == "TIME") {
       useTimeStamp = true;

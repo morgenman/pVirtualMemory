@@ -2,6 +2,7 @@
 #define PTE_H
 
 #include <iostream>
+
 #include "virtualMemoryTypes.h"
 /**
  * A Page Table Entry
@@ -14,9 +15,9 @@
  * the data fields or use {} initialization to set the value of the
  * fields when they are declared.
  */
-class PTE
-{
-public:
+class PTE {
+ public:
+  PTE();
   /**
    * Get the FrameNumber from the PTE.
    *
@@ -64,9 +65,9 @@ public:
    */
   bool referenced(bool newReferenced);
 
-private:
-  bool _present{};
-  bool _referenced{};
+ private:
+  bool _present{false};
+  bool _referenced{false};
   FrameNumber _frame{noSuchFrame};
 };
 
@@ -86,6 +87,6 @@ private:
  * @param pte the PTE to print
  * @return out for continued processing of the output stream
  */
-std::ostream & operator<<(std::ostream & out, const PTE & pte);
+std::ostream& operator<<(std::ostream& out, const PTE& pte);
 
 #endif /* PTE_H */

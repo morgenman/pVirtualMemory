@@ -1,40 +1,31 @@
 #include "pageTable.h"
 
-/**
- * Constructor takes the number of pages in the page table.
- */
-PageTable::PageTable(const size_t n) {}
+PageTable::PageTable(const size_t n) { resize(n); }
 
-/**
- * Clear the referenced bit in all PTE.
- */
-void PageTable::clearReferenced() {}
+void PageTable::clearReferenced() {
+  for (auto i : (*this)) i.referenced(false);
+}
 
-/**
- * Lookup the given page in the PageTable.
- *
- * @param p page number to translate to FrameNumber
- * @return the FrameNumber where the page is loaded (if it is present)
- * noSuchFrame otherwise
- */
-FrameNumber PageTable::lookup(PageNumber p) { return 0; }
+FrameNumber PageTable::lookup(PageNumber p) {
+  if ((*this).at(p).present()) return (*this)[p].frame();
+  return noSuchFrame;
+}
 
-/**
- * Find the lowest page number that is unrefereSnced.
- *
- * @return valid page number of an unreferenced, present page
- * if there is one; noSuchPage otherwise.
- */
-PageNumber PageTable::findUnreferenced() { return 0; }
+PageNumber PageTable::findUnreferenced() {
+  for (int i = 0; i < (int)(*this).size(); i++)
+    if (!(*this).at(i).referenced()) return i;
+  return noSuchFrame;
+}
 
-/**
- * Find the page number associated with the give frame.
- *
- * @return page number of present page referring to given frame;
- * noSuchPage if there is no such page.
- */
-PageNumber PageTable::findByFrame(FrameNumber frame) { return 0; }
+PageNumber PageTable::findByFrame(FrameNumber frame) {
+  for (int i = 0; i < (int)(*this).size(); i++)
+    if ((*this)[i].present() && (*this)[i].frame() == frame) return i;
+  return noSuchPage;
+}
 
 std::ostream& operator<<(std::ostream& out, const PageTable& pageTable) {
-  return std::cout;
+  for (int i = 0; i < (int)pageTable.size(); i++) {
+    out << "  " << std::hex << i << " " << pageTable[i] << "\n";
+  }
+  return out;
 }
