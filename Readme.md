@@ -7,7 +7,7 @@ Program reads a *virtual address trace* (mixed with some commands) and
 translates it to a *physical* address trace. As written, the memory spaces, both
 virtual and physical, are hardwired. Modifying the Frame and PTE classes allow it to be easily modified to implement more complex representations of virtual and physical memory.
 
-## The command loop is provided in ~main~ (~vmSimulator.cpp~). It reads
+## The command loop is provided in `main` (`vmSimulator.cpp`). It reads
 standard input by line. The '#' character starts an EOLN style
 comment, commands cannot span a line, and blank lines are ignored by
 the processor.
